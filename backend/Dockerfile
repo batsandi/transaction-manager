@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+RUN chmod +x /app/app/prestart.sh
+
+CMD ["/bin/sh", "-c", "/app/app/prestart.sh && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
