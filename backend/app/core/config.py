@@ -10,5 +10,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     SECRET_KEY: str
     
+    ALGORITHM: str = "HS256"
+
 # Other parts of the application will import this 'settings' object.
 settings = Settings()
