@@ -1,8 +1,12 @@
 from fastapi import APIRouter
-from .endpoints import login 
+from app.api.v1.endpoints import login, transactions
 
 
 api_router = APIRouter()
+
+# Include the login and transaction routers.
+api_router.include_router(login.router, tags=["Authentication"])
+api_router.include_router(transactions.router, prefix="/transactions", tags=["Transactions"])
 
 @api_router.get("/")
 def api_root_health_check():

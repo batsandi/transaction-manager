@@ -3,9 +3,9 @@
 echo "Waiting for PostgreSQL to start..."
 
 # We use a loop with 'nc' (netcat) to check if the database port is open.
-while ! nc -z db 5432; do
-  sleep 0.1
-done
+# while ! nc -z db 5432; do
+#   sleep 0.1
+# done
 
 echo "PostgreSQL started."
 
