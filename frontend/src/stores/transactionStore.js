@@ -2,16 +2,16 @@ import { defineStore } from 'pinia';
 import apiService from '@/services/apiService';
 
 export const useTransactionStore = defineStore('transactions', {
-  // State
-
+  // --- STATE ---
   state: () => ({
     transactions: [],
     loading: false,
     error: null,
   }),
 
-  // Actions
+  // --- ACTIONS ---
   actions: {
+    // Fetches all transactions from the backend
     async fetchTransactions() {
       this.loading = true;
       this.error = null;
@@ -29,12 +29,11 @@ export const useTransactionStore = defineStore('transactions', {
     // Creates a new transaction
     async createTransaction(transactionData) {
       try {
-        const response = await apiService.post('/transactions/', transactionData);
-        // On success, add the new transaction to the start of local array
-        this.transactions.unshift(response.data);
+        await apiService.post('/transactions/', transactionData);
+        await this.fetchTransactions();
       } catch (err) {
         console.error('Failed to create transaction:', err);
-
+        // Re-throw the error so the component knows it failed
         throw err;
       }
     },

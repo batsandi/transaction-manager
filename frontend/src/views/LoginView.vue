@@ -3,6 +3,10 @@
     <div class="p-8 bg-white rounded-lg shadow-xl w-full max-w-md">
       <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Transaction Manager</h1>
 
+      <div v-if="authStore.error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <span class="block sm:inline">{{ authStore.error }}</span>
+      </div>
+
       <!-- Login / Register Toggle -->
       <div class="flex justify-center mb-6 border-b">
         <button 
@@ -63,7 +67,7 @@ export default {
 
   data() {
     return {
-      isLogin: true, 
+      isLogin: true,
       username: '',
       password: '',
     };
@@ -83,8 +87,7 @@ export default {
           await this.authStore.register(credentials);
         }
       } catch (error) {
-        alert("Action failed. Please check the console for details.");
-        console.error("Authentication action failed:", error);
+        console.error("Authentication action failed:", error.message);
       }
     }
   }
