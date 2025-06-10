@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
+  <div class="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8" >
     <header class="flex justify-between items-center mb-8">
-      <h1 class="text-3xl font-bold text-gray-800">My Transactions</h1>
+      <img src="/bank_logo.png" alt="bank_Logo" class="h-10 w-auto" />
       <button @click="authStore.logout()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
         Logout
       </button>
