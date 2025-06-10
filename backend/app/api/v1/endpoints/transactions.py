@@ -35,6 +35,25 @@ def read_transactions(
     return transactions
 
 
+@router.get("/{transaction_id}", response_model=TransactionRead)
+def read_transaction_by_id(
+    *,
+    db: Session = Depends(get_db),
+    transaction_id: int,
+    current_user: User = Depends(get_current_active_user)
+):
+    """
+    Retrieve a specific transaction by its ID.
+    """
+    db_transaction = crud.get_transaction_by_id(db=db, transaction_id=transaction_id)
+    if not db_transaction:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+    if db_transaction.owner_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+
+    return db_transaction
+
+
 @router.put("/{transaction_id}", response_model=TransactionRead)
 def update_transaction(
     *,
@@ -46,6 +65,7 @@ def update_transaction(
     """
     Update a transaction's status.
     """
+    print(f' {'#'*10} updating transaction {transaction_id} with data: {transaction_in}')
     db_transaction = crud.get_transaction_by_id(db=db, transaction_id=transaction_id)
     if not db_transaction:
         raise HTTPException(status_code=404, detail="Transaction not found")

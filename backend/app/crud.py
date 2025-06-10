@@ -28,6 +28,7 @@ def create_user(db: Session, user: UserCreate) -> User:
 
     return db_user
 
+
 def get_transaction_by_id(db: Session, transaction_id: int) -> Transaction | None:
     """
     Fetches a single transaction by its ID.
@@ -49,7 +50,7 @@ def create_transaction(db: Session, transaction: TransactionCreate, owner_id: in
     """
     # Create a new Transaction object from the input schema and owner_id
     db_transaction = Transaction(**transaction.model_dump(), owner_id=owner_id)
-    
+
     db.add(db_transaction)
     db.commit()
     db.refresh(db_transaction)
@@ -65,7 +66,7 @@ def update_transaction_status(db: Session, db_transaction: Transaction, transact
 
     # Update the status field on the existing database object
     db_transaction.status = update_data["status"]
-    
+
     db.add(db_transaction)
     db.commit()
     db.refresh(db_transaction)

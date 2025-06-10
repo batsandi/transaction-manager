@@ -8,6 +8,7 @@ api_router = APIRouter()
 api_router.include_router(login.router, tags=["Authentication"])
 api_router.include_router(transactions.router, prefix="/transactions", tags=["Transactions"])
 
+
 @api_router.get("/")
 def api_root_health_check():
     """

@@ -25,9 +25,10 @@ const router = createRouter({
           component: TransactionList
         },
         {
-          path: '/detail/:id',
+          path: 'detail/:id',
           name: 'transaction-detail',
           component: TransactionDetail,
+          props: true,
         },
       ]
     }

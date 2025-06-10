@@ -20,6 +20,7 @@
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beneficiary</th>
@@ -33,6 +34,9 @@
             :key="transaction.id"
             @click="goToDetails(transaction.id)"
             class="cursor-pointer hover:bg-gray-50 transition-colors duration-150">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ transaction.id }}
+            </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <span 
                 :class="statusClass(transaction.status)"
@@ -90,7 +94,6 @@ export default {
     }
   },
   mounted() {
-    // When the component mounts, call the fetchTransactions action we just mapped.
     this.fetchTransactions();
   }
 }
