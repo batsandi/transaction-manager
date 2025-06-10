@@ -20,17 +20,17 @@
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beneficiary</th>
-            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+            <th @click="sortBy('id')" scope="col" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+            <th @click="sortBy('status')" scope="col" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th @click="sortBy('date')" scope="col" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+            <th @click="sortBy('beneficiary')" scope="col" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beneficiary</th>
+            <th @click="sortBy('amount')" scope="col" class="cursor-pointer px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <!-- We now loop over the 'transactions' computed property -->
           <tr 
-            v-for="transaction in transactions" 
+            v-for="transaction in sortedTransactions"
             :key="transaction.id"
             @click="goToDetails(transaction.id)"
             class="cursor-pointer hover:bg-gray-50 transition-colors duration-150">
@@ -66,8 +66,32 @@ import { mapState, mapActions } from 'pinia';
 
 export default {
   name: 'TransactionList',
+  data() {
+    return {
+      sortKey: 'id',
+      sortOrder: -1,
+    };
+  },
   computed: {
-    ...mapState(useTransactionStore, ['transactions', 'loading', 'error'])
+    ...mapState(useTransactionStore, ['transactions', 'loading', 'error']),
+      sortedTransactions() {
+      const transactionsCopy = [...this.transactions];
+      
+      transactionsCopy.sort((a, b) => {
+        const aValue = a[this.sortKey];
+        const bValue = b[this.sortKey];
+
+        if (aValue < bValue) {
+          return -1 * this.sortOrder;
+        }
+        if (aValue > bValue) {
+          return 1 * this.sortOrder;
+        }
+        return 0;
+      });
+      
+      return transactionsCopy;
+    }
   },
   methods: {
     ...mapActions(useTransactionStore, ['fetchTransactions']),
@@ -81,6 +105,14 @@ export default {
     },
     goToDetails(transactionId) {
       this.$router.push({ name: 'transaction-detail', params: { id: transactionId } });
+    },
+    sortBy(key) {
+      if (this.sortKey === key) {
+        this.sortOrder = this.sortOrder * -1;
+      } else {
+        this.sortKey = key;
+        this.sortOrder = 1;
+      }
     },
 
     statusClass(status) {
