@@ -25,6 +25,8 @@
             <th @click="sortBy('date')" scope="col" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
             <th @click="sortBy('beneficiary')" scope="col" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beneficiary</th>
             <th @click="sortBy('amount')" scope="col" class="cursor-pointer px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+            <th @click="sortBy('amount')" scope="col" class="cursor-pointer px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
@@ -52,6 +54,9 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-right">
               {{ formatCurrency(transaction.amount) }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-right">
+              {{ transaction.transaction_type }}
             </td>
           </tr>
         </tbody>

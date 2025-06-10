@@ -4,8 +4,28 @@
   <div v-else-if="transactionDetail" class="relative border border-gray-300 p-5 m-5 rounded-lg shadow-md">
     <h1 class="text-2xl font-bold mb-4">Details for Transaction #{{ transactionDetail.id }}</h1>
     
-    <p class="text-lg">Beneficiary: {{ transactionDetail.beneficiary }}</p>
-    <p class="text-lg">Amount: {{ transactionDetail.amount }}</p>
+    <div class="overflow-hidden border rounded-lg">
+      <table class="min-w-full divide-y divide-gray-200">
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr>
+            <td class="px-4 py-3 font-medium text-gray-600 w-1/3">Beneficiary</td>
+            <td class="px-4 py-3 text-gray-900">{{ transactionDetail.beneficiary }}</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-3 font-medium text-gray-600">Amount</td>
+            <td class="px-4 py-3 text-gray-900">{{ transactionDetail.amount }}</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-3 font-medium text-gray-600">Date</td>
+            <td class="px-4 py-3 text-gray-900">{{ transactionDetail.date }}</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-3 font-medium text-gray-600">Transaction type</td>
+            <td class="px-4 py-3 text-gray-900">{{ transactionDetail.transaction_type }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <button
       class="absolute top-3 right-3 bg-gray-200 hover:bg-red-500 text-gray-700 hover:text-white font-bold rounded-full w-8 h-8 flex items-center justify-center transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
