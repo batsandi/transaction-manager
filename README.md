@@ -44,3 +44,39 @@ shut down with
 ```
 docker compose down -v
 ```
+
+## High-Level Technical Design
+__Core Technologies & Principles__
+
+The application is built on a modern, decoupled architecture designed for maintainability and a clear separation of concerns.
+
+__Backend Framework__: FastAPI 
+
+__Frontend Framework__: Vue 3 (JavaScript)
+
+__Database__: PostgreSQL 
+
+__Data Modeling__: SQLModel
+
+__Containerization__: Docker Compose 
+
+__Backend Architecture__
+
+__API Layer__: The public-facing interface that defines all endpoints, validates requests, and shapes responses.
+
+__Security & Authentication Layer__: Handles user credential verification, JWT generation and validation, and endpoint protection.
+
+__Business Logic & CRUD Layer__: Contains the core application logic and data manipulation functions (Create, Read, Update, Delete).
+
+__Database Interface Layer:__ Manages all direct interaction with the PostgreSQL database, providing reliable sessions for executing queries.
+
+__Frontend Architecture__
+
+
+__Component & View Layer__: The visual part of the application, composed of larger "Views" (pages) and smaller, reusable "Components" (UI elements).
+
+__Routing Service (Vue Router)__: Manages all client-side navigation, mapping URLs to Views and protecting authenticated routes.
+
+__State Management Service (Pinia)__: A centralized store for global application state, primarily the user's authentication status and token.
+
+__API Service (Axios)__: A dedicated module that handles all communication with the backend API, automatically attaching authentication headers to requests.
