@@ -1,7 +1,17 @@
 <template>
   <div class="bg-white p-6 rounded-lg shadow-md">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold text-gray-700">Recent Transactions</h2>
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold text-gray-700">Recent Transactions</h2>
+        <!-- Search Input -->
+        <div class="g-1/2">
+          <input 
+            v-model="searchQuery"
+            type="text" 
+            placeholder="Search by beneficiary..."
+            class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+      </div>
     </div>
 
     <div v-if="loading" class="text-center text-gray-500 py-4">
@@ -12,9 +22,10 @@
       <p><strong>Error:</strong> {{ error }}</p>
     </div>
 
-    <div v-else-if="transactions.length === 0" class="text-center text-gray-500 py-4">
-      You have no transactions yet.
+    <div v-else-if="sortedTransactions.length === 0" class="text-center text-gray-500 py-4">
+      No transactions found
     </div>
+
 
     <div v-else class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
@@ -73,14 +84,29 @@ export default {
   name: 'TransactionList',
   data() {
     return {
+      searchQuery: '',
       sortKey: 'id',
       sortOrder: -1,
     };
   },
   computed: {
     ...mapState(useTransactionStore, ['transactions', 'loading', 'error']),
+
+      filteredTransactions() {
+        if (!this.searchQuery) {
+          // If the search box is empty, return the full list
+          return this.transactions;
+        }
+        const lowerCaseQuery = this.searchQuery.toLowerCase();
+        // Otherwise, filter the list
+        return this.transactions.filter(transaction =>
+          // Check if the beneficiary's name includes the search query
+          transaction.beneficiary.toLowerCase().includes(lowerCaseQuery)
+        );
+      },
+
       sortedTransactions() {
-      const transactionsCopy = [...this.transactions];
+      const transactionsCopy = [...this.filteredTransactions];
       
       transactionsCopy.sort((a, b) => {
         const aValue = a[this.sortKey];
